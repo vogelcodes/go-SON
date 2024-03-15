@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -78,19 +79,23 @@ type Page struct {
     Data Data
     Form FormData
 }
+type URL string
 
-type Lead struct {
-    Email string
-    Phone string
-    Name string
-    Tag string
-    Date string
-    Cta string
-    Url string
-    AvatarUrl string
-    Location string
+func (u URL) MarshalJSON() ([]byte, error) {
+    return []byte(`"` + string(u) + `"`), nil
 }
 
+type Lead struct {
+    Email     string `json:"email"`
+    Phone     string `json:"phone"`
+    Name      string `json:"name"`
+    Tag       string `json:"tag"`
+    Date      string `json:"date"`
+    Cta       string `json:"cta"`
+    Url       URL `json:"url"`
+    AvatarUrl string `json:"avatarUrl"`
+    Location  string `json:"location"`
+}
 func newPage() Page {
     return Page{
         Data: newData(),
@@ -138,6 +143,10 @@ func main() {
             default:
                 // handle error
             }
+            url, err := url.QueryUnescape(lead[6].(string))
+if err != nil {
+    // handle error
+}
             
             leadsStruct = append(leadsStruct, Lead{
                 Email: lead[0].(string),
@@ -146,13 +155,17 @@ func main() {
                 Tag: lead[3].(string),
                 Date: lead[4].(string),
                 Cta: cta,
-                Url: lead[6].(string),
+                Url: URL(url),
                 AvatarUrl: lead[7].(string),
                 Location: lead[8].(string),
             })
         }
+        for i := len(leadsStruct)/2-1; i >= 0; i-- {
+            opp := len(leadsStruct)-1-i
+            leadsStruct[i], leadsStruct[opp] = leadsStruct[opp], leadsStruct[i]
+        }
         
-        return c.JSON(200, leadsStruct[0])
+        return c.JSONPretty(200, leadsStruct[0:9], "  ")
     })
 
     e.POST("/contacts", func(c echo.Context) error {
