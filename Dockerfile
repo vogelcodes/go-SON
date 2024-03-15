@@ -22,4 +22,4 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /go-htmx
 EXPOSE 42069
 
 # Run
-CMD ["/docker-gs-ping"]
+CMD ["/main"]
