@@ -6,9 +6,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+    <script src="/js/lite-yt-embed.js"></script>
     <link href="/css/tw.css" rel="stylesheet" />
+    <link href="/css/lite-yt-embed.css" rel="stylesheet" />
   </head>
   <body class="bg-slate-400 max-w-4xl mx-auto">
+    <h1
+      class="mb-[14.4px] mt-6 px-4 text-center text-[18px] text-slate-50 font-extrabold uppercase leading-[29px] tracking-[-25] text-cream sm:w-2/3 sm:px-0 sm:text-[24px] sm:leading-[36px]"
+    >
+      Aprenda como
+      <span class="text-[25px] text-red-400 sm:text-[35px]">
+        aumentar a sua produção
+      </span>
+      de leite e ofereça o
+      <span class="text-[25px] text-green-200 sm:text-[35px]">
+        melhor alimento do mundo
+      </span>
+      ao seu bebê.
+    </h1>
+    <lite-youtube
+      videoid="eXp3-bclWPs"
+      playlabel="Play: Keynote (Google I/O '18)"
+      autoplay="1"
+    ></lite-youtube>
     {{ template "form" .Form }}
     <hr />
     {{ template "display" .Data }}

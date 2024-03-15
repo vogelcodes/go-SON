@@ -88,6 +88,8 @@ func main() {
     e.Use(middleware.Logger())
     e.Static("/images", "images")
     e.Static("/css", "css")
+    e.Static("/fonts", "fonts")
+    e.Static("/js", "js")
 
     page := newPage()
     e.Renderer = newTemplate()
